@@ -17,6 +17,9 @@
     },
     "nodeModulesDir": "none",
     "lock": false,
+    "minimumDependencyAge": {
+        "exclude": ["jsr:@grammyjs/grammy"]
+    },
     "tasks": {
         "ok": "deno fmt --check && deno lint && deno check && deno test",
         "publish:jsr": "deno publish",
