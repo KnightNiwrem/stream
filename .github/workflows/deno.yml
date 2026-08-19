@@ -15,18 +15,6 @@ on:
         branches: [main]
 
 jobs:
-    backport:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v4
-
-            - name: Install dependencies
-              run: npm install --ignore-scripts
-
-            - name: Run backporting
-              run: npm run backport
-
     format-and-lint:
         runs-on: ubuntu-latest
         steps:
@@ -43,6 +31,9 @@ jobs:
             - name: Lint
               run: deno lint
 
+            - name: Check
+              run: deno check
+
     test:
         runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
@@ -58,8 +49,5 @@ jobs:
               with:
                   deno-version: v2.x
 
-            - name: Cache Dependencies
-              run: deno task check
-
             - name: Run Tests
-              run: deno task test
+              run: deno test

@@ -1,13 +1,8 @@
-import {
-    assert,
-    assertEquals,
-    assertMatch,
-    assertRejects,
-    describe,
-    it,
-} from "./deps.test.ts";
-import { Message, MessageEntity, RawApi } from "../src/deps.deno.ts";
-import { MessageDraftPiece, streamApi } from "../src/stream.ts";
+import { assert, assertEquals, assertMatch, assertRejects } from "@std/assert";
+import { describe, it } from "@std/testing/bdd";
+import type { RawApi } from "@grammyjs/grammy";
+import type { Message, MessageEntity } from "@grammyjs/grammy/types";
+import { type MessageDraftPiece, streamApi } from "../src/stream.ts";
 
 interface RawApiStub {
     drafts: Parameters<RawApi["sendMessageDraft"]>[0][];
@@ -91,7 +86,7 @@ function stubRawApi(options: {
                 if (blockMessage) await messageLock.promise;
                 const message_id = stub.messages.length;
                 stub.messages.push(record(params));
-                return { message_id } as Message.TextMessage;
+                return { message_id } as Message;
             },
             async sendRichMessageDraft(params) {
                 if (draftError) throw draftError;
@@ -104,7 +99,7 @@ function stubRawApi(options: {
                 if (blockMessage) await messageLock.promise;
                 const message_id = stub.richMessages.length;
                 stub.richMessages.push(record(params));
-                return { message_id } as Message.RichMessageMessage;
+                return { message_id } as Message;
             },
         } as RawApi,
     };

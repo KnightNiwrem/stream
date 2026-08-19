@@ -1,12 +1,10 @@
-import {
-    type ApiMethods,
-    type Context,
-    type InputRichMessage,
-    type Message,
-    type MessageEntity,
-    type MiddlewareFn,
-    type RawApi,
-} from "./deps.deno.ts";
+import type { Context, MiddlewareFn, RawApi } from "@grammyjs/grammy";
+import type {
+    ApiMethods,
+    InputRichMessage,
+    Message,
+    MessageEntity,
+} from "@grammyjs/grammy/types";
 
 /**
  * A draft piece is an object that describes a chunk of a message draft. It can
@@ -111,7 +109,7 @@ export interface StreamContextExtension {
                 "chat_id" | "text"
             >,
             signal?: AbortSignal,
-        ): Promise<Message.TextMessage[]>;
+        ): Promise<Message[]>;
         /**
          * Use this method to stream an iterator of rich markdown message pieces
          * to a private chat. Returns a rich message object.
@@ -154,7 +152,7 @@ export interface StreamContextExtension {
             >,
             baseInputRichMessage?: Omit<InputRichMessage, "markdown" | "html">,
             signal?: AbortSignal,
-        ): Promise<Message.RichMessageMessage>;
+        ): Promise<Message>;
         /**
          * Use this method to stream an iterator of rich HTML message pieces to
          * a private chat. Returns a rich message object.
@@ -197,7 +195,7 @@ export interface StreamContextExtension {
             >,
             baseInputRichMessage?: Omit<InputRichMessage, "markdown" | "html">,
             signal?: AbortSignal,
-        ): Promise<Message.RichMessageMessage>;
+        ): Promise<Message>;
     };
     /**
      * Use this method to stream an iterator of message pieces to the current
@@ -275,7 +273,7 @@ export interface StreamContextExtension {
             "chat_id" | "text"
         >,
         signal?: AbortSignal,
-    ): Promise<Message.TextMessage[]>;
+    ): Promise<Message[]>;
     /**
      * Use this method to stream an iterator of rich markdown message pieces to
      * a private chat. Returns a rich message object.
@@ -319,7 +317,7 @@ export interface StreamContextExtension {
         >,
         baseInputRichMessage?: Omit<InputRichMessage, "markdown" | "html">,
         signal?: AbortSignal,
-    ): Promise<Message.RichMessageMessage>;
+    ): Promise<Message>;
     /**
      * Use this method to stream an iterator of rich HTML message pieces to a
      * private chat. Returns a rich message object.
@@ -363,7 +361,7 @@ export interface StreamContextExtension {
         >,
         baseInputRichMessage?: Omit<InputRichMessage, "markdown" | "html">,
         signal?: AbortSignal,
-    ): Promise<Message.RichMessageMessage>;
+    ): Promise<Message>;
 }
 
 /** Collection of options for the stream plugin */
@@ -756,7 +754,7 @@ export function streamApi(
             }
         }
 
-        const messages: Message.TextMessage[] = [];
+        const messages: Message[] = [];
         async function push() {
             try {
                 while (!exhausted || complete.length > 0) {
